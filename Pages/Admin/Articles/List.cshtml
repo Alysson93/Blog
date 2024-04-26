@@ -1,0 +1,28 @@
+@page
+@model Blog.Pages.Admin.Articles.ListModel
+
+<div class="bg-secondary bg-opacity-10 py-2 mb-5">
+  <div class="container">
+    <h1>Articles</h1>
+  </div>
+</div>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Title</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var article in Model.Articles)
+            {
+                <tr>
+                    <td>@article.Id</td>
+                    <td>@article.Title</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
