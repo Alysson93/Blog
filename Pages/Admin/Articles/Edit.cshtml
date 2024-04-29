@@ -1,0 +1,50 @@
+@page "{id:Guid}"
+@model Blog.Pages.Admin.Articles.EditModel
+
+<div class="bg-secondary bg-opacity-10 py-2 mb-5">
+  <div class="container">
+    <h1>Edit article</h1>
+  </div>
+</div>
+
+<div>
+  <div class="container">
+    <form method="post">
+      <div class="mb-3">
+        <label for="title" class="form-label">Id</label>
+        <input type="text" class="form-control" id="id" asp-for="Article.Id" readonly>
+      </div>
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" asp-for="Article.Title">
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <input type="text" class="form-control" id="description" asp-for="Article.Description">
+      </div>
+      <div class="mb-3">
+        <label for="content" class="form-label">Content</label>
+        <textarea class="form-control" id="content" asp-for="Article.Content"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="imageUrl" class="form-label">Image URL</label>
+        <input type="text" class="form-control" id="imageUrl" asp-for="Article.ImageUrl">
+      </div>
+      <div class="mb-3">
+        <label for="slug" class="form-label">Slug</label>
+        <input type="text" class="form-control" id="slug" asp-for="Article.Slug">
+      </div>
+      <div class="mb-3">
+        <label for="author" class="form-label">Author</label>
+        <input type="text" class="form-control" id="author" asp-for="Article.Author">
+      </div>
+      <div class="form-check mb-3">
+        <input type="checkbox" class="form-check-input" id="visible" asp-for="Article.Visible">
+        <label for="visible" class="form-check-label">Visible</label>
+      </div>
+      <div class="mb-3">
+        <input type="submit" class="btn btn-primary" value="Submit" name="go" id="author">
+      </div>
+    </form>
+  </div>
+</div>
