@@ -1,6 +1,7 @@
 using Blog.Data;
 using Blog.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Pages.Admin.Articles;
 
@@ -14,8 +15,8 @@ public class ListModel : PageModel
         _context = context;
     }
 
-    public void OnGet()
+    public async Task OnGet()
     {
-        Articles = _context.Articles.ToList();
+        Articles = await _context.Articles.ToListAsync();
     }
 }

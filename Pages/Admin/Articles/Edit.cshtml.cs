@@ -17,15 +17,14 @@ public class EditModel : PageModel
         _context = context;
     }
 
-    public void OnGet(Guid id)
+    public async Task OnGet(Guid id)
     {
-        var article = _context.Articles.Find(id);
-        if (article != null) Article = article;
+        Article = await _context.Articles.FindAsync(id);
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostEdit()
     {
-        var article = _context.Articles.Find(Article.Id);
+        var article = await _context.Articles.FindAsync(Article.Id);
         if (article == null) return Page();
         article.Title = Article.Title;
         article.Description = Article.Description;
@@ -34,7 +33,16 @@ public class EditModel : PageModel
         article.Slug = Article.Slug;
         article.Author = Article.Author;
         article.Visible = Article.Visible;
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
+        return RedirectToPage("/admin/articles/list");
+    }
+
+    public async Task<IActionResult> OnPostDelete()
+    {
+        var article = await _context.Articles.FindAsync(Article.Id);
+        if (article == null) return Page();
+        _context.Articles.Remove(article);
+        await _context.SaveChangesAsync();
         return RedirectToPage("/admin/articles/list");
     }
 }

@@ -23,7 +23,7 @@ public class AddModel : PageModel
         
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPost()
     {
         var article = new Article
         {
@@ -35,8 +35,8 @@ public class AddModel : PageModel
             Author = Dto.Author,
             Visible = Dto.Visible
         };
-        _context.Articles.Add(article);
-        _context.SaveChanges();
+        await _context.Articles.AddAsync(article);
+        await _context.SaveChangesAsync();
         return RedirectToPage("/Admin/Articles/List");
     }
 }

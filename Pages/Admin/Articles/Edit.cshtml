@@ -9,6 +9,8 @@
 
 <div>
   <div class="container">
+    @if (@Model.Article != null)
+    {
     <form method="post">
       <div class="mb-3">
         <label for="title" class="form-label">Id</label>
@@ -42,9 +44,14 @@
         <input type="checkbox" class="form-check-input" id="visible" asp-for="Article.Visible">
         <label for="visible" class="form-check-label">Visible</label>
       </div>
-      <div class="mb-3">
-        <input type="submit" class="btn btn-primary" value="Submit" name="go" id="author">
+      <div class="mb-3 d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary" name="edit" asp-page-handler="Edit">Edit</button>
+        <button class="btn btn-danger" type="submit" name="delete" asp-page-handler="Delete">Delete</button>
       </div>
     </form>
+    } else
+    {
+      <p>Article not found</p>
+    }
   </div>
 </div>
