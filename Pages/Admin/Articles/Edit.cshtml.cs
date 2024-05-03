@@ -19,7 +19,8 @@ public class EditModel : PageModel
 
     public async Task OnGet(Guid id)
     {
-        Article = await _repository.ReadById(id);
+        var article = await _repository.ReadById(id);
+        if (article != null) Article = article;
     }
 
     public async Task<IActionResult> OnPostEdit()

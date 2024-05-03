@@ -25,17 +25,7 @@ public class AddModel : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        var article = new Article
-        {
-            Title = Dto.Title,
-            Description = Dto.Description,
-            Content = Dto.Content,
-            ImageUrl = Dto.ImageUrl,
-            Slug = Dto.Slug,
-            Author = Dto.Author,
-            Visible = Dto.Visible
-        };
-        await _repository.Create(article);
+        await _repository.Create(Dto);
         return RedirectToPage("/Admin/Articles/List");
     }
 }

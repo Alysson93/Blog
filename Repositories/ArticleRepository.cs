@@ -1,5 +1,6 @@
 using Blog.Data;
 using Blog.Models;
+using Blog.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Repositories;
@@ -13,8 +14,18 @@ public class ArticleRepository : IArticleRepository
         _context = context;
     }
 
-    public async Task<Article> Create(Article article)
+    public async Task<Article> Create(ArticleRequest request)
     {
+        var article = new Article
+        {
+            Title = request.Title,
+            Description = request.Description,
+            Content = request.Content,
+            ImageUrl = request.ImageUrl,
+            Slug = request.Slug,
+            Author = request.Author,
+            Visible = request.Visible
+        };
         await _context.Articles.AddAsync(article);
         await _context.SaveChangesAsync();
         return article;
@@ -34,7 +45,7 @@ public class ArticleRepository : IArticleRepository
         return await _context.Articles.ToListAsync();
     }
 
-    public async Task<Article> ReadById(Guid id)
+    public async Task<Article?> ReadById(Guid id)
     {
         return await _context.Articles.FindAsync(id);
     }
