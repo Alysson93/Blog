@@ -1,4 +1,5 @@
 using Blog.Data;
+using Blog.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseSqlite(builder.Configuration["Database"]);
 });
+builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
 
 var app = builder.Build();
 

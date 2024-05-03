@@ -1,6 +1,6 @@
-using Blog.Data;
 using Blog.Models;
 using Blog.Models.ViewModels;
+using Blog.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -11,11 +11,11 @@ public class AddModel : PageModel
     [BindProperty]
     public ArticleRequest Dto { get; set; } = new();
 
-    private AppDbContext _context;
+    private IArticleRepository _repository;
 
-    public AddModel(AppDbContext context)
+    public AddModel(IArticleRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public void OnGet()
@@ -35,8 +35,7 @@ public class AddModel : PageModel
             Author = Dto.Author,
             Visible = Dto.Visible
         };
-        await _context.Articles.AddAsync(article);
-        await _context.SaveChangesAsync();
+        await _repository.Create(article);
         return RedirectToPage("/Admin/Articles/List");
     }
 }

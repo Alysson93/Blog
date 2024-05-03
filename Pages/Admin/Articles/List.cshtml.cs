@@ -1,22 +1,21 @@
-using Blog.Data;
 using Blog.Models;
+using Blog.Repositories;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace Blog.Pages.Admin.Articles;
 
 public class ListModel : PageModel
 {
     public List<Article> Articles { get; set; } = new();
-    private readonly AppDbContext _context;
+    private readonly IArticleRepository _repository;
 
-    public ListModel(AppDbContext context)
+    public ListModel(IArticleRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async Task OnGet()
     {
-        Articles = await _context.Articles.ToListAsync();
+        Articles = await _repository.Read();
     }
 }

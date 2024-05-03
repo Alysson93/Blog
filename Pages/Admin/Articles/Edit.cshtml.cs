@@ -1,5 +1,5 @@
-using Blog.Data;
 using Blog.Models;
+using Blog.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -10,39 +10,29 @@ public class EditModel : PageModel
     [BindProperty]
     public Article Article { get; set; } = new();
 
-    private readonly AppDbContext _context;
+    private readonly IArticleRepository _repository;
 
-    public EditModel(AppDbContext context)
+    public EditModel(IArticleRepository repository)
     {
-        _context = context;
+        _repository = repository;
     }
 
     public async Task OnGet(Guid id)
     {
-        Article = await _context.Articles.FindAsync(id);
+        Article = await _repository.ReadById(id);
     }
 
     public async Task<IActionResult> OnPostEdit()
     {
-        var article = await _context.Articles.FindAsync(Article.Id);
-        if (article == null) return Page();
-        article.Title = Article.Title;
-        article.Description = Article.Description;
-        article.Content = Article.Content;
-        article.ImageUrl = Article.ImageUrl;
-        article.Slug = Article.Slug;
-        article.Author = Article.Author;
-        article.Visible = Article.Visible;
-        await _context.SaveChangesAsync();
-        return RedirectToPage("/admin/articles/list");
+        if (await _repository.Update(Article))
+            return RedirectToPage("/admin/articles/list");
+        return Page();
     }
 
     public async Task<IActionResult> OnPostDelete()
     {
-        var article = await _context.Articles.FindAsync(Article.Id);
-        if (article == null) return Page();
-        _context.Articles.Remove(article);
-        await _context.SaveChangesAsync();
-        return RedirectToPage("/admin/articles/list");
+        if (await _repository.Delete(Article.Id))
+            return RedirectToPage("/admin/articles/list");
+        return Page();
     }
 }
