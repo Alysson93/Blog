@@ -26,7 +26,7 @@ public class EditModel : PageModel
     public async Task<IActionResult> OnPostEdit()
     {
         if (await _repository.Update(Article))
-            return RedirectToPage("/admin/articles/list");
+            ViewData["Message"] = "Article edited successfully!";
         return Page();
     }
 

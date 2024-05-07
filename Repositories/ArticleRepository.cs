@@ -33,7 +33,7 @@ public class ArticleRepository : IArticleRepository
 
     public async Task<bool> Delete(Guid id)
     {
-        var article = await this.ReadById(id);
+        var article = await ReadById(id);
         if (article == null) return false;
         _context.Articles.Remove(article);
         await _context.SaveChangesAsync();
@@ -52,7 +52,7 @@ public class ArticleRepository : IArticleRepository
 
     public async Task<bool> Update(Article article)
     {
-        var art = await this.ReadById(article.Id);
+        var art = await ReadById(article.Id);
         if (art == null) return false;
         art.Title = article.Title;
         art.Description = article.Description;
