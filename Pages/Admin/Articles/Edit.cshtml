@@ -8,7 +8,7 @@
 </div>
 
 @{
-  var message = (string) ViewData["Message"];
+  var message = (string?) ViewData["Message"];
 }
 
 @if(!string.IsNullOrWhiteSpace(message))

@@ -16,6 +16,8 @@ public class ListModel : PageModel
 
     public async Task OnGet()
     {
+        var message = (string?)TempData["Message"];
+        ViewData["Message"] = message;
         Articles = await _repository.Read();
     }
 }

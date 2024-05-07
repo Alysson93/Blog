@@ -26,6 +26,7 @@ public class AddModel : PageModel
     public async Task<IActionResult> OnPost()
     {
         await _repository.Create(Dto);
+        TempData["Message"] = "Article saved successfully!";
         return RedirectToPage("/Admin/Articles/List");
     }
 }

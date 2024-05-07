@@ -7,6 +7,20 @@
   </div>
 </div>
 
+@{
+    var message = (string?) ViewData["Message"];
+}
+
+@if (!string.IsNullOrWhiteSpace(message))
+{
+  <div class="container mb-5">
+    <div class="alert alert-success alert-dismissible fade show mb-5" role="alert">
+      @Html.Raw(message)
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+    </div>
+  </div>
+}
+
 <div class="container">
     @if (@Model.Articles.Count() > 0)
     {
