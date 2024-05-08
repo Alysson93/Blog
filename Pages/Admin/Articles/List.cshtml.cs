@@ -1,4 +1,6 @@
+using System.Text.Json;
 using Blog.Models;
+using Blog.Models.ViewModels;
 using Blog.Repositories;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -16,8 +18,9 @@ public class ListModel : PageModel
 
     public async Task OnGet()
     {
-        var message = (string?)TempData["Message"];
-        ViewData["Message"] = message;
+        var notification = (string?) TempData["Notification"];
+        if (notification != null)
+            ViewData["Notification"] = JsonSerializer.Deserialize<Notification>(notification);
         Articles = await _repository.Read();
     }
 }

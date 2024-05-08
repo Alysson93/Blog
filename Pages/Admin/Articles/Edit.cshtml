@@ -7,20 +7,6 @@
   </div>
 </div>
 
-@{
-  var message = (string?) ViewData["Message"];
-}
-
-@if(!string.IsNullOrWhiteSpace(message))
-{
-  <div class="container mb-5">
-    <div class="alert alert-success alert-dismissible fade show mb-5" role="alert">
-      @Html.Raw(message)
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
-    </div>
-  </div>
-}
-
 <div>
   <div class="container">
     @if (@Model.Article != null)
@@ -32,11 +18,11 @@
       </div>
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
-        <input type="text" class="form-control" id="title" asp-for="Article.Title">
+        <input type="text" class="form-control" id="title" asp-for="Article.Title" required>
       </div>
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <input type="text" class="form-control" id="description" asp-for="Article.Description">
+        <input type="text" class="form-control" id="description" asp-for="Article.Description" required>
       </div>
       <div class="mb-3">
         <label for="content" class="form-label">Content</label>
@@ -44,15 +30,15 @@
       </div>
       <div class="mb-3">
         <label for="imageUrl" class="form-label">Image URL</label>
-        <input type="text" class="form-control" id="imageUrl" asp-for="Article.ImageUrl">
+        <input type="text" class="form-control" id="imageUrl" required asp-for="Article.ImageUrl">
       </div>
       <div class="mb-3">
         <label for="slug" class="form-label">Slug</label>
-        <input type="text" class="form-control" id="slug" asp-for="Article.Slug">
+        <input type="text" class="form-control" id="slug" required asp-for="Article.Slug">
       </div>
       <div class="mb-3">
         <label for="author" class="form-label">Author</label>
-        <input type="text" class="form-control" id="author" asp-for="Article.Author">
+        <input type="text" class="form-control" id="author" required asp-for="Article.Author">
       </div>
       <div class="form-check mb-3">
         <input type="checkbox" class="form-check-input" id="visible" asp-for="Article.Visible">

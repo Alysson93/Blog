@@ -1,4 +1,7 @@
+using System.Text.Json;
+using Blog.Enums;
 using Blog.Models;
+using Blog.Models.ViewModels;
 using Blog.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -25,15 +28,33 @@ public class EditModel : PageModel
 
     public async Task<IActionResult> OnPostEdit()
     {
+        Notification notification = new();
         if (await _repository.Update(Article))
-            ViewData["Message"] = "Article edited successfully!";
-        return Page();
+        {
+            notification.Message ="Record updated successfully!";
+            notification.Type = NotificationType.Success;
+        } else
+        {
+            notification.Message ="Record Record update failed";
+            notification.Type = NotificationType.Error; 
+        }
+        TempData["Notification"] = JsonSerializer.Serialize(notification);
+        return RedirectToPage("/Admin/Articles/List");
     }
 
     public async Task<IActionResult> OnPostDelete()
     {
+        Notification notification = new();
         if (await _repository.Delete(Article.Id))
-            return RedirectToPage("/admin/articles/list");
-        return Page();
+        {
+            notification.Message ="Record deleted successfully!";
+            notification.Type = NotificationType.Success;
+        } else
+        {
+            notification.Message ="Record delete failed";
+            notification.Type = NotificationType.Error; 
+        }
+        TempData["Notification"] = JsonSerializer.Serialize(notification);
+        return RedirectToPage("/Admin/Articles/List");
     }
 }

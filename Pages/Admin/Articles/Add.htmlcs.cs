@@ -1,4 +1,5 @@
-using Blog.Models;
+using System.Text.Json;
+using Blog.Enums;
 using Blog.Models.ViewModels;
 using Blog.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,12 @@ public class AddModel : PageModel
     public async Task<IActionResult> OnPost()
     {
         await _repository.Create(Dto);
-        TempData["Message"] = "Article saved successfully!";
+        var notification = new Notification
+        {
+            Message = "Record saved successfully",
+            Type = NotificationType.Success
+        };
+        TempData["Notification"] = JsonSerializer.Serialize(notification);
         return RedirectToPage("/Admin/Articles/List");
     }
 }
