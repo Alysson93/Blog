@@ -11,6 +11,7 @@ builder.Services.AddDbContext<AppDbContext>(options => {
     options.UseSqlite(builder.Configuration["Database"]);
 });
 builder.Services.AddScoped<IArticleRepository, ArticleRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
 
 var app = builder.Build();
 
