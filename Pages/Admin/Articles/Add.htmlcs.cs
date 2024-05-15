@@ -11,6 +11,8 @@ public class AddModel : PageModel
 {
     [BindProperty]
     public ArticleRequest Dto { get; set; } = new();
+    [BindProperty]
+    public IFormFile FileImage { get; set; }
 
     private IArticleRepository _repository;
 

@@ -23,8 +23,13 @@
         <textarea class="form-control" id="content" asp-for="Dto.Content" required></textarea>
       </div>
       <div class="mb-3">
+        <label for="file" class="form-label">Image upload</label>
+        <input type="file" id="file" asp-for="FileImage">
+      </div>
+      <div class="mb-3">
         <label for="imageUrl" class="form-label">Image URL</label>
         <input type="text" class="form-control" id="imageUrl" asp-for="Dto.ImageUrl" required>
+        <img src="" id="image" style="display: none; width: 300px;">
       </div>
       <div class="mb-3">
         <label for="slug" class="form-label">Slug</label>
@@ -48,5 +53,25 @@
 @section Scripts {
   <script>
     var editor = new FroalaEditor('#content')
+
+    const file = document.getElementById('file')
+    const imageUrl = document.getElementById('imageUrl')
+    const image = document.getElementById('image')
+    file.addEventListener('change', async (e) => {
+      let data = new FormData()
+      data.append('file', e.target.files[0])
+      await fetch('/api/v1/image', {
+        method: 'POST',
+        headers: {
+          'Accept': '*/*'
+        },
+        body: data
+      }).then(response => response.json())
+      .then(result => {
+        imageUrl.value = result.link
+        image.style.display = 'block'
+        image.src = result.link
+      })
+    })
   </script>
 }
