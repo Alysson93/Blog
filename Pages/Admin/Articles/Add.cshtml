@@ -52,7 +52,9 @@
 
 @section Scripts {
   <script>
-    var editor = new FroalaEditor('#content')
+    var editor = new FroalaEditor('#content', {
+      imageUploadURL: '/api/image'
+    })
 
     const file = document.getElementById('file')
     const imageUrl = document.getElementById('imageUrl')

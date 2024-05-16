@@ -14,6 +14,7 @@
     <form method="post">
       <div class="mb-3">
         <label for="title" class="form-label">Id</label>
+    using Blog.Models;
         <input type="text" class="form-control" id="id" asp-for="Article.Id" readonly>
       </div>
       <div class="mb-3">
@@ -29,9 +30,20 @@
         <textarea class="form-control" id="content" asp-for="Article.Content"></textarea>
       </div>
       <div class="mb-3">
+        <label for="file" class="form-label">Image upload</label>
+        <input type="file" id="file" asp-for="FileImage">
+      </div>
+      <div class="mb-3">
         <label for="imageUrl" class="form-label">Image URL</label>
         <input type="text" class="form-control" id="imageUrl" required asp-for="Article.ImageUrl">
       </div>
+      @if (@Model.Article.ImageUrl == null)
+      {
+        <img src="" id="image" style="width: 300px;">
+      } else
+      {
+        <img src="@Model.Article.ImageUrl" id="image" style="display: none; width: 300px;">
+      }
       <div class="mb-3">
         <label for="slug" class="form-label">Slug</label>
         <input type="text" class="form-control" id="slug" required asp-for="Article.Slug">
@@ -58,6 +70,27 @@
 
 @section Scripts {
   <script>
-    var editor = new FroalaEditor('#content')
+    var editor = new FroalaEditor('#content', {
+      imageUploadURL: '/api/image'
+    })
+    const file = document.getElementById('file')
+    const imageUrl = document.getElementById('imageUrl')
+    const image = document.getElementById('image')
+    file.addEventListener('change', async (e) => {
+      let data = new FormData()
+      data.append('file', e.target.files[0])
+      await fetch('/api/v1/image', {
+        method: 'POST',
+        headers: {
+          'Accept': '*/*'
+        },
+        body: data
+      }).then(response => response.json())
+      .then(result => {
+        imageUrl.value = result.link
+        image.style.display = 'block'
+        image.src = result.link
+      })
+    })
   </script>
 }

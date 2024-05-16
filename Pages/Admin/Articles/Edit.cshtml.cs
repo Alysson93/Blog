@@ -12,6 +12,8 @@ public class EditModel : PageModel
 {
     [BindProperty]
     public Article Article { get; set; } = new();
+    [BindProperty]
+    public IFormFile FileImage { get; set; }
 
     private readonly IArticleRepository _repository;
 
